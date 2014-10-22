@@ -48,6 +48,17 @@ var _ = {};
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
+    if (Array.isArray(collection)) {
+      for (var i = 0, x = collection.length; i < x; i+=1) {
+        iterator(collection[i], i, collection);
+      }
+    }
+
+    else {
+      for (var key in collection) {
+          iterator(collection[key], key, collection);
+      }
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
@@ -69,16 +80,71 @@ var _ = {};
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    // create newArr to push passed elements
+    var newArr = [];
+
+    // if array
+    if (Array.isArray(collection)){
+      for (var i = 0, x = collection.length; i < x; i+=1) {
+        if (test(collection[i])) {
+          newArr.push(collection[i]);
+        }
+      }
+    }
+
+    //if object
+    else {
+      for (var key in collection) {
+        if (test(collection[key])) {
+          newArr.push(collection[key]);
+        }
+      }
+    }
+
+    return newArr;
+
+    /* 
+      OR... using _.each
+
+      var newArr = [];
+    
+    _.each(collection, function (value) {
+      if (test(value)) {
+        newArr.push(value);
+      }
+    });
+
+    return newArr;
+
+    */
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+
+    var antiTest = function(value) {
+      return !test(value);
+    }
+
+    return _.filter(collection, antiTest);
+
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    // create newArr to push unique values to
+    var newArr = [];
+
+    // loop over array and push unique values to newArr
+    for (var i = 0, x = array.length; i < x; i+=1) {
+      if (newArr.indexOf(array[i]) < 0) {
+        newArr.push(array[i]);
+      }
+    }
+
+    return newArr;
   };
 
 
