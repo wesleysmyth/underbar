@@ -247,7 +247,7 @@ var _ = {};
     if (iterator === undefined) {
       iterator = _.identity;
     }
-    
+
     return _.reduce(collection, function(passed, current){
       return iterator(current) ? passed : false;
     },true);
@@ -258,6 +258,19 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
+    // If false is returned from the statement below (since at least one element passed the every test), this reverses the false to true
+    return !_.every(collection, function(item){  
+      
+    // If no iterator is given, we will set the iterator function to _.identity, which will just return the item
+    if (iterator === undefined){
+      iterator = _.identity;
+    }
+
+    // if any element passes every as truthful, the opposite (false) will be returned...
+    return !iterator(item);
+
+    });
   };
 
 
