@@ -415,7 +415,7 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    var newArr = Array.prototype.slice.apply(array,arguments);  //copy of array
+    var newArr = array.slice();  //copy of array
 
     return newArr.sort(function() {  // returns a positive number or negative number 50% of the time
       return Math.random() - 0.5;
