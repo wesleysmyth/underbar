@@ -473,7 +473,7 @@ var _ = {};
     results = results.concat.apply(results, nestedArray);
     for (var i = 0, x = results.length; i < x; i++) {
       if (Array.isArray(results[i])) {
-        return _.flatten(results);
+        return _.flatten(results, result);
       }
     }
     return results;
